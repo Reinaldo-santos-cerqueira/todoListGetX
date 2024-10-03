@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:getx_todo_list/data/models/task.dart';
 import 'package:getx_todo_list/data/service/storage/repository.dart';
@@ -7,6 +8,9 @@ class HomeController extends GetxController {
   HomeController({required this.taskRepository});
 
   final tasks = <Task>[].obs;
+  final formKey = GlobalKey<FormState>();
+  final editController = TextEditingController();
+  final chipIndex = 0.obs;
 
   @override
   void onInit() {
@@ -18,5 +22,22 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  void changeChipIndex(int value) {
+    chipIndex.value = value;
+  }
+
+  bool addTask(Task task) {
+    if (tasks.contains(task)) {
+      return false;
+    } else {
+      try {
+        tasks.add(task);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
   }
 }
