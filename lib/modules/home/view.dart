@@ -5,6 +5,7 @@ import 'package:getx_todo_list/data/models/task.dart';
 import 'package:getx_todo_list/modules/home/controller.dart';
 import 'package:getx_todo_list/app/core/utils/extensions.dart';
 import 'package:getx_todo_list/modules/home/widgets/add_card.dart';
+import 'package:getx_todo_list/modules/home/widgets/add_dialog.dart';
 import 'package:getx_todo_list/modules/home/widgets/task_card.dart';
 
 class HomePage extends GetView<HomeController> {
@@ -33,7 +34,7 @@ class HomePage extends GetView<HomeController> {
               physics: const ClampingScrollPhysics(),
               children: [
                 ...controller.tasks.map((element) => LongPressDraggable<Task>(
-                    data: element, // Certifique-se de que a tarefa está sendo passada
+                    data: element,
                     onDragStarted: () {
                       controller.changeDeleting(true);
                     },
@@ -59,7 +60,8 @@ class HomePage extends GetView<HomeController> {
           return Obx(() => FloatingActionButton(
               backgroundColor:
                   controller.deleting.value ? Colors.red : Colors.blue,
-              onPressed: () {},
+              onPressed: () =>
+                  Get.to(() => AddDialog(), transition: Transition.downToUp),
               child: controller.deleting.value
                   ? const Icon(Icons.delete_outline, color: Colors.white)
                   : const Icon(Icons.add, color: Colors.white)));
